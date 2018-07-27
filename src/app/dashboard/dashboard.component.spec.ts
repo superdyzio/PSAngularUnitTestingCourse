@@ -11,7 +11,7 @@ describe('DashboardComponent', () => {
   let HEROES : Array<Hero>;
   let mockHeroService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     HEROES = [
       { id: 1, name: 'SpiderDude', strength: 8 },
       { id: 2, name: 'WonderfulWoman', strength: 24 },
@@ -30,8 +30,10 @@ describe('DashboardComponent', () => {
         { provide: HeroService, useValue: mockHeroService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    });
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
   });
 

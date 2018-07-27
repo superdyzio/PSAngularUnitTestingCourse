@@ -7,27 +7,27 @@ describe('HeroComponent', () => {
   let fixture : ComponentFixture<HeroComponent>;
   let hero : Hero;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [HeroComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    });
+    }).compileComponents();
 
     hero = { id: 1, name: 'SuperDude', strength: 50 };
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(HeroComponent);
+
+    fixture.componentInstance.hero = hero;
+    fixture.detectChanges();
   });
 
   it('should have the correct hero', () => {
-    fixture.componentInstance.hero = hero;
-
     expect(fixture.componentInstance.hero.name).toEqual(hero.name);
   });
 
   it('should render hero name in an anchor tag', () => {
-    fixture.componentInstance.hero = hero;
-    fixture.detectChanges();
-
     expect(fixture.nativeElement.querySelector('a').textContent).toContain(hero.name);
   });
 
