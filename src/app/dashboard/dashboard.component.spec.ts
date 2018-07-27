@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
   let fixture : ComponentFixture<DashboardComponent>;
+  let component : DashboardComponent;
   let HEROES : Array<Hero>;
   let mockHeroService;
 
@@ -35,20 +36,21 @@ describe('DashboardComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
+    component = fixture.componentInstance;
   });
 
   it('should call getHeroes on component init', () => {
-    const spy = spyOn(fixture.componentInstance, 'getHeroes');
+    const spy = spyOn(component, 'getHeroes');
 
-    fixture.componentInstance.ngOnInit();
+    component.ngOnInit();
 
     expect(spy).toHaveBeenCalled();
   });
 
   it('should call heroService.getHeroes and set heroes array based on response', () => {
-    fixture.componentInstance.getHeroes();
+    component.getHeroes();
 
     expect(mockHeroService.getHeroes).toHaveBeenCalledTimes(1);
-    expect(fixture.componentInstance.heroes).toEqual(HEROES.slice(1, 5));
+    expect(component.heroes).toEqual(HEROES.slice(1, 5));
   });
 });

@@ -5,6 +5,7 @@ import { HeroComponent } from './hero.component';
 
 describe('HeroComponent', () => {
   let fixture : ComponentFixture<HeroComponent>;
+  let component : HeroComponent;
   let hero : Hero;
 
   beforeEach(async () => {
@@ -18,13 +19,14 @@ describe('HeroComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeroComponent);
+    component = fixture.componentInstance;
 
-    fixture.componentInstance.hero = hero;
+    component.hero = hero;
     fixture.detectChanges();
   });
 
   it('should have the correct hero', () => {
-    expect(fixture.componentInstance.hero.name).toEqual(hero.name);
+    expect(component.hero.name).toEqual(hero.name);
   });
 
   it('should render hero name in an anchor tag', () => {
@@ -32,7 +34,7 @@ describe('HeroComponent', () => {
   });
 
   it('should call onDeleteClick when delete button is clicked', () => {
-    const spy = spyOn(fixture.componentInstance, 'onDeleteClick');
+    const spy = spyOn(component, 'onDeleteClick');
 
     fixture.nativeElement.querySelector('button.delete').click();
 
@@ -40,10 +42,10 @@ describe('HeroComponent', () => {
   });
 
   it('should call delete.next when delete button is clicked', () => {
-    fixture.componentInstance.delete = jasmine.createSpyObj('delete', ['next']);
+    component.delete = jasmine.createSpyObj('delete', ['next']);
 
     fixture.nativeElement.querySelector('button.delete').click();
 
-    expect(fixture.componentInstance.delete.next).toHaveBeenCalled();
+    expect(component.delete.next).toHaveBeenCalled();
   });
 });
