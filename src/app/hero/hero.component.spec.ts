@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Hero } from '../hero';
 import { HeroComponent } from './hero.component';
 
@@ -8,14 +8,14 @@ describe('HeroComponent', () => {
   let component : HeroComponent;
   let hero : Hero;
 
-  beforeEach(async () => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HeroComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     hero = { id: 1, name: 'SuperDude', strength: 50 };
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeroComponent);

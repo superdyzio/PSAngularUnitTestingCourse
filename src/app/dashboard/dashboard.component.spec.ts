@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs/observable/of';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
@@ -12,7 +12,7 @@ describe('DashboardComponent', () => {
   let HEROES : Array<Hero>;
   let mockHeroService;
 
-  beforeEach(async () => {
+  beforeEach(async(() => {
     HEROES = [
       { id: 1, name: 'SpiderDude', strength: 8 },
       { id: 2, name: 'WonderfulWoman', strength: 24 },
@@ -32,7 +32,7 @@ describe('DashboardComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
