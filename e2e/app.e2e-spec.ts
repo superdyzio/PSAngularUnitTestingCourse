@@ -1,6 +1,6 @@
 'use strict'; // necessary for es6 output in node
 
-import { browser, element, by, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder } from 'protractor';
 import { promise } from 'selenium-webdriver';
 
 const expectedH1 = 'Tour of Heroes';
@@ -11,13 +11,13 @@ const nameSuffix = 'X';
 const newHeroName = targetHero.name + nameSuffix;
 
 class Hero {
-  id: number;
-  name: string;
+  id : number;
+  name : string;
 
   // Factory methods
 
   // Hero from string formatted as '<id> <name>'.
-  static fromString(s: string): Hero {
+  static fromString(s : string) : Hero {
     return {
       id: +s.substr(0, s.indexOf(' ')),
       name: s.substr(s.indexOf(' ') + 1),
@@ -25,21 +25,21 @@ class Hero {
   }
 
   // Hero from hero list <li> element.
-  static async fromLi(li: ElementFinder): Promise<Hero> {
-      let stringsFromA = await li.all(by.css('a')).getText();
-      let strings = stringsFromA[0].split(' ');
-      return { id: +strings[0], name: strings[1] };
+  static async fromLi(li : ElementFinder) : Promise<Hero> {
+    let stringsFromA = await li.all(by.css('a')).getText();
+    let strings = stringsFromA[0].split(' ');
+    return { id: +strings[0], name: strings[1] };
   }
 
   // Hero id and name from the given detail element.
-  static async fromDetail(detail: ElementFinder): Promise<Hero> {
+  static async fromDetail(detail : ElementFinder) : Promise<Hero> {
     // Get hero id from the first <div>
     let _id = await detail.all(by.css('div')).first().getText();
     // Get name from the h2
     let _name = await detail.element(by.css('h2')).getText();
     return {
-        id: +_id.substr(_id.indexOf(' ') + 1),
-        name: _name.substr(0, _name.lastIndexOf(' '))
+      id: +_id.substr(_id.indexOf(' ') + 1),
+      name: _name.substr(0, _name.lastIndexOf(' ')),
     };
   }
 }
@@ -66,7 +66,7 @@ describe('Tutorial part 6', () => {
       heroDetail: element(by.css('app-root app-hero-detail > div')),
 
       searchBox: element(by.css('#search-box')),
-      searchResults: element.all(by.css('.search-result li'))
+      searchResults: element.all(by.css('.search-result li')),
     };
   }
 
@@ -77,12 +77,12 @@ describe('Tutorial part 6', () => {
     });
 
     it(`has h1 '${expectedH1}'`, () => {
-        expectHeading(1, expectedH1);
+      expectHeading(1, expectedH1);
     });
 
     const expectedViewNames = ['Dashboard', 'Heroes'];
     it(`has views ${expectedViewNames}`, () => {
-      let viewNames = getPageElts().navElts.map((el: ElementFinder) => el.getText());
+      let viewNames = getPageElts().navElts.map((el : ElementFinder) => el.getText());
       expect(viewNames).toEqual(expectedViewNames);
     });
 
@@ -168,7 +168,7 @@ describe('Tutorial part 6', () => {
       expect(page.allHeroes.count()).toEqual(9, 'number of heroes');
       const heroesAfter = await toHeroArray(page.allHeroes);
       // console.log(await Hero.fromLi(page.allHeroes[0]));
-      const expectedHeroes =  heroesBefore.filter(h => h.name !== newHeroName);
+      const expectedHeroes = heroesBefore.filter(h => h.name !== newHeroName);
       expect(heroesAfter).toEqual(expectedHeroes);
       // expect(page.selectedHeroSubview.isPresent()).toBeFalsy();
     });
@@ -188,7 +188,7 @@ describe('Tutorial part 6', () => {
       expect(heroesAfter.slice(0, numHeroes)).toEqual(heroesBefore, 'Old heroes are still there');
 
       const maxId = heroesBefore[heroesBefore.length - 1].id;
-      expect(heroesAfter[numHeroes]).toEqual({id: maxId + 1, name: newHeroName});
+      expect(heroesAfter[numHeroes]).toEqual({ id: maxId + 1, name: newHeroName });
     });
 
     it('displays correctly styled buttons', async () => {
@@ -279,28 +279,28 @@ describe('Tutorial part 6', () => {
 
 });
 
-function addToHeroName(text: string): promise.Promise<void> {
+function addToHeroName(text : string) : promise.Promise<void> {
   let input = element(by.css('input'));
   return input.sendKeys(text);
 }
 
-function expectHeading(hLevel: number, expectedText: string): void {
-    let hTag = `h${hLevel}`;
-    let hText = element(by.css(hTag)).getText();
-    expect(hText).toEqual(expectedText, hTag);
-};
+function expectHeading(hLevel : number, expectedText : string) : void {
+  let hTag = `h${hLevel}`;
+  let hText = element(by.css(hTag)).getText();
+  expect(hText).toEqual(expectedText, hTag);
+}
 
-function getHeroAEltById(id: number): ElementFinder {
+function getHeroAEltById(id : number) : ElementFinder {
   let spanForId = element(by.cssContainingText('li span.badge', id.toString()));
   return spanForId.element(by.xpath('..'));
 }
 
-function getHeroLiEltById(id: number): ElementFinder {
+function getHeroLiEltById(id : number) : ElementFinder {
   let spanForId = element(by.cssContainingText('li span.badge', id.toString()));
   return spanForId.element(by.xpath('../..'));
 }
 
-async function toHeroArray(allHeroes: ElementArrayFinder): Promise<Hero[]> {
+async function toHeroArray(allHeroes : ElementArrayFinder) : Promise<Hero[]> {
   let promisedHeroes = await allHeroes.map(Hero.fromLi);
   // The cast is necessary to get around issuing with the signature of Promise.all()
   return <Promise<any>> Promise.all(promisedHeroes);
