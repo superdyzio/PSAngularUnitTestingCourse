@@ -26,7 +26,7 @@ describe('HeroesComponent', () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
     mockHeroService.deleteHero.and.returnValue(of(true));
 
-    component = new HeroesComponent(mockHeroService);
+    component = new HeroesComponent(<HeroService>(<any>mockHeroService));
   });
   describe('ngOnInit', () => {
     it('should call getHeroes method 1 time', () => {
@@ -147,6 +147,7 @@ describe('HeroesComponent', () => {
     });
     it('should delete with given object from component.heroes array ', () => {
       const startingHeroesLength = component.heroes.length;
+      expect(component.heroes).toContain(heroToRemove);
       component.delete(heroToRemove);
       expect(component.heroes.length).toBe(startingHeroesLength - 1);
       expect(component.heroes).not.toContain(heroToRemove);
