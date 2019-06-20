@@ -6,7 +6,6 @@ import { HeroService } from '../hero.service';
 import { Spied } from '../types/spied.type';
 
 import { HeroSearchComponent } from './hero-search.component';
-import { RouterModule } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 fdescribe('HeroSearchComponent', () => {
@@ -27,8 +26,8 @@ fdescribe('HeroSearchComponent', () => {
     );
     TestBed.configureTestingModule({
       declarations: [HeroSearchComponent],
-      imports: [RouterModule],
-      providers: [{ provide: HeroService, useValue: mockHeroService }]
+      providers: [{ provide: HeroService, useValue: mockHeroService }],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
