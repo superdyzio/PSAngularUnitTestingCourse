@@ -37,7 +37,11 @@ fdescribe('HeroSearchComponent', () => {
     component.ngOnInit();
   });
 
-  it('should pass', () => {
-    expect(true).toBe(true);
+  it('should push new search term to searchTerms subject', () => {
+    const searchTerm = 'searchTerm';
+    component['searchTerms'].subscribe((term: string) => {
+      expect(term).toEqual(searchTerm);
+    });
+    component.search(searchTerm);
   });
 });
