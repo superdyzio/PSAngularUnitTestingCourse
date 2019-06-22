@@ -7,30 +7,25 @@ import { StrengthPipe } from '../strength/strength.pipe';
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
-  let fixture : ComponentFixture<DashboardComponent>;
-  let component : DashboardComponent;
-  let HEROES : Array<Hero>;
+  let fixture: ComponentFixture<DashboardComponent>;
+  let component: DashboardComponent;
+  let HEROES: Array<Hero>;
   let mockHeroService;
 
   beforeEach(async(() => {
     HEROES = [
       { id: 1, name: 'SpiderDude', strength: 8 },
       { id: 2, name: 'WonderfulWoman', strength: 24 },
-      { id: 3, name: 'SuperDude', strength: 55 },
+      { id: 3, name: 'SuperDude', strength: 55 }
     ];
 
     mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroes']);
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
 
     TestBed.configureTestingModule({
-      declarations: [
-        DashboardComponent,
-        StrengthPipe,
-      ],
-      providers: [
-        { provide: HeroService, useValue: mockHeroService },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [DashboardComponent, StrengthPipe],
+      providers: [{ provide: HeroService, useValue: mockHeroService }],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
