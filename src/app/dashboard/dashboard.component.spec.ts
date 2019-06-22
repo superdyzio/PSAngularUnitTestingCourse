@@ -10,13 +10,23 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let component: DashboardComponent;
   let HEROES: Array<Hero>;
+  let fourStrongestHeroSortedByStrength;
   let mockHeroService;
 
   beforeEach(async(() => {
     HEROES = [
       { id: 1, name: 'SpiderDude', strength: 8 },
       { id: 2, name: 'WonderfulWoman', strength: 24 },
-      { id: 3, name: 'SuperDude', strength: 55 }
+      { id: 3, name: 'SuperDude', strength: 55 },
+      { id: 4, name: 'TurboDude', strength: 25 },
+      { id: 5, name: 'Superman', strength: 15 },
+      { id: 6, name: 'CatWoman', strength: 100 }
+    ];
+    fourStrongestHeroSortedByStrength = [
+      { id: 6, name: 'CatWoman', strength: 100 },
+      { id: 3, name: 'SuperDude', strength: 55 },
+      { id: 4, name: 'TurboDude', strength: 25 },
+      { id: 2, name: 'WonderfulWoman', strength: 24 }
     ];
 
     mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroes']);
@@ -34,18 +44,20 @@ describe('DashboardComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should call getHeroes on component init', () => {
-    const spy = spyOn(component, 'getHeroes');
+  describe('ngInit', () => {
+    it('should call getHeroes on component init', () => {
+      const spy = spyOn(component, 'getHeroes');
+      component.ngOnInit();
 
-    component.ngOnInit();
-
-    expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
   });
+  describe('getHeroes', () => {
+    it('should call heroService.getHeroes and set heroes array based on response', () => {
+      component.getHeroes();
 
-  it('should call heroService.getHeroes and set heroes array based on response', () => {
-    component.getHeroes();
-
-    expect(mockHeroService.getHeroes).toHaveBeenCalledTimes(1);
-    expect(component.heroes).toEqual(HEROES.slice(1, 5));
+      expect(mockHeroService.getHeroes).toHaveBeenCalledTimes(1);
+      expect(component.heroes).toEqual(fourStrongestHeroSortedByStrength);
+    });
   });
 });
