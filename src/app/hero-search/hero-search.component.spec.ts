@@ -14,7 +14,7 @@ import { Spied } from '../types/spied.type';
 import { HeroSearchComponent } from './hero-search.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-fdescribe('HeroSearchComponent', () => {
+describe('HeroSearchComponent', () => {
   let fixture: ComponentFixture<HeroSearchComponent>;
   let component: HeroSearchComponent;
   let heroes: Hero[];
