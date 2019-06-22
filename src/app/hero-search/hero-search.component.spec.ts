@@ -1,4 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick
+} from '@angular/core/testing';
 import { of } from 'rxjs/observable/of';
 
 import { Hero } from '../hero';
@@ -44,4 +50,52 @@ fdescribe('HeroSearchComponent', () => {
     });
     component.search(searchTerm);
   });
+
+  it('should return filtered list of heroes', done => {
+    const searchTerm = 'SuperDude';
+    const filteredHeroes: Hero[] = heroes.filter(hero =>
+      hero.name.includes(searchTerm)
+    );
+    component.heroes$.subscribe((heroesList: Hero[]) => {
+      expect(heroesList).toEqual(filteredHeroes);
+      expect(mockHeroService.searchHeroes).toHaveBeenCalledTimes(1);
+      expect(mockHeroService.searchHeroes).toHaveBeenCalledWith(searchTerm);
+      done();
+    });
+    component.search(searchTerm);
+  });
+  it('should not call heroService.searchHeroes when search term has not changed', fakeAsync(() => {
+    const searchTerm = 'SuperDude';
+    component.heroes$.subscribe();
+    component.search(searchTerm);
+    tick(350);
+    component.search(searchTerm);
+    tick(350);
+    expect(mockHeroService.searchHeroes).toHaveBeenCalledTimes(1);
+  }));
+  it('should call heroService.searchHeroes twice when search term has changed and time between search more than 300 ms', fakeAsync(() => {
+    const searchTerm = 'Dude';
+    const secondSearchTerm = 'SuperDude';
+    component.heroes$.subscribe();
+    component.search(searchTerm);
+    tick(350);
+    component.search(secondSearchTerm);
+    tick(350);
+    expect(mockHeroService.searchHeroes).toHaveBeenCalledTimes(2);
+    expect(mockHeroService.searchHeroes.calls.allArgs()).toEqual([
+      [searchTerm],
+      [secondSearchTerm]
+    ]);
+  }));
+  it('should call heroService.searchHeroes once with second searchterm when search term has changed but time between search less than 300 ms', fakeAsync(() => {
+    const searchTerm = 'Dude';
+    const secondSearchTerm = 'SuperDude';
+    component.heroes$.subscribe();
+    component.search(searchTerm);
+    tick(250);
+    component.search(secondSearchTerm);
+    tick(350);
+    expect(mockHeroService.searchHeroes).toHaveBeenCalledTimes(1);
+    expect(mockHeroService.searchHeroes).toHaveBeenCalledWith(secondSearchTerm);
+  }));
 });
