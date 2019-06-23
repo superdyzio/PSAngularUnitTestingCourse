@@ -1,7 +1,7 @@
 import { MessagesComponent } from './messages.component';
 
 describe('MessagesComponent', () => {
-  let component : MessagesComponent;
+  let component: MessagesComponent;
   let mockMessageService;
 
   beforeEach(() => {
