@@ -5,7 +5,7 @@ import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NgForOf } from '@angular/common';
 
-fdescribe('MessagesComponent', () => {
+describe('MessagesComponent', () => {
   let fixture: ComponentFixture<MessagesComponent>;
   let component: MessagesComponent;
   let messageService: MessageService;
