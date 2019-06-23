@@ -4,13 +4,13 @@ import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  let fixture : ComponentFixture<AppComponent>;
-  let component : AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -21,7 +21,9 @@ describe('AppComponent', () => {
   });
 
   it('should render title in h1 tag', () => {
-    expect(fixture.debugElement.query(By.css('h1')).nativeElement.textContent).toContain(component.title);
+    expect(
+      fixture.debugElement.query(By.css('h1')).nativeElement.textContent
+    ).toContain(component.title);
   });
 
   it('should contain two router links', () => {
