@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -27,6 +27,12 @@ describe('AppComponent', () => {
   });
 
   it('should contain two router links', () => {
+    const expectedLinks: string[] = ['/dashboard', '/heroes'];
     expect(fixture.debugElement.queryAll(By.css('a')).length).toEqual(2);
+    expect(
+      fixture.debugElement
+        .queryAll(By.css('a'))
+        .map((a: DebugElement) => a.attributes.routerLink)
+    ).toEqual(expectedLinks);
   });
 });
