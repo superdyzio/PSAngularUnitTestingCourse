@@ -1,7 +1,7 @@
 import { InMemoryDataService } from './in-memory-data.service';
 
 describe('InMemoryDataService', () => {
-  let service : InMemoryDataService;
+  let service: InMemoryDataService;
 
   beforeEach(() => {
     service = new InMemoryDataService();
@@ -19,8 +19,8 @@ describe('InMemoryDataService', () => {
         { id: 17, name: 'Dynama', strength: 43 },
         { id: 18, name: 'Dr IQ', strength: 4 },
         { id: 19, name: 'Magma', strength: 18 },
-        { id: 20, name: 'Tornado', strength: 15 },
-      ],
+        { id: 20, name: 'Tornado', strength: 15 }
+      ]
     });
   });
 });

@@ -4,14 +4,14 @@ import { Hero } from '../hero';
 import { HeroComponent } from './hero.component';
 
 describe('HeroComponent', () => {
-  let fixture : ComponentFixture<HeroComponent>;
-  let component : HeroComponent;
-  let hero : Hero;
+  let fixture: ComponentFixture<HeroComponent>;
+  let component: HeroComponent;
+  let hero: Hero;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HeroComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     hero = { id: 1, name: 'SuperDude', strength: 50 };
@@ -30,7 +30,9 @@ describe('HeroComponent', () => {
   });
 
   it('should render hero name in an anchor tag', () => {
-    expect(fixture.nativeElement.querySelector('a').textContent).toContain(hero.name);
+    expect(fixture.nativeElement.querySelector('a').textContent).toContain(
+      hero.name
+    );
   });
 
   it('should call onDeleteClick when delete button is clicked', () => {
